@@ -3,6 +3,11 @@ import Link from 'next/link'
 import { compareDesc, format, parseISO } from 'date-fns'
 import { allPosts, Post } from 'contentlayer/generated'
 import { getMDXComponent } from "next-contentlayer/hooks";
+import { MyComponent } from '@/components/MyComponent'
+const mdxComponents = {
+  // Add a custom component.
+  MyComponent
+}
 function PostCard(post: Post) {
   const Content = getMDXComponent(post.body.code)
   return (
@@ -15,7 +20,7 @@ function PostCard(post: Post) {
       <time dateTime={post.date} className="mb-2 block text-xs text-gray-600">
         {format(parseISO(post.date), 'LLLL d, yyyy')}
       </time>
-      <Content></Content>
+      <Content components={mdxComponents}></Content>
     </div>
   )
 }

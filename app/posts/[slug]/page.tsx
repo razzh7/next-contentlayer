@@ -1,10 +1,10 @@
 import { allPosts } from 'contentlayer/generated'
 import { useMDXComponent } from 'next-contentlayer/hooks'
 import { notFound } from 'next/navigation'
-
+import { MyComponent } from '@/components/MyComponent'
 const mdxComponents = {
   // Add a custom component.
-  MyComponent: () => <div>Hello World!</div>
+  MyComponent
 }
 
 export async function generateStaticParams() {
@@ -21,7 +21,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   if (!post) notFound()
 
   // Parse the MDX file via the useMDXComponent hook.
-  const MDXContent = useMDXComponent(post.body.code)
+  const MDXContent = useMDXComponent(post.body.code, { components: mdxComponents })
 
   return (
     <div>
